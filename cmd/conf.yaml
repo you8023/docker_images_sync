@@ -2,8 +2,8 @@
 registry: registry.cn-hangzhou.aliyuncs.com
 # 阿里云个人镜像仓库命名空间名称
 namespace: hongmin_image_registory
-# git仓库所在项目的本地路径，这里配置错误会导致git push 命令提示仓库不存在
-images_dir: "/Users/sunhongmin/IdeaProjects/docker_images_sync"
+# git仓库路径
+images_dir: "/Users/sunhongmin/docker/images"
 # 拉取镜像尝试间隔（秒），默认为1
 max_retries: 60
 # 拉取镜像尝试间隔（秒），默认为1
