@@ -159,7 +159,34 @@ source ~/.bashrc
 ```
 **Mac系统**：
 
-参考linux系统配置（目前手头没有mac设备，暂未测试，测试了的小伙伴可以留个言反馈一下，如果有问题欢迎提issue）。
+1. 将docker_pull 添加到系统环境变量，这将帮助你在任意路径下都可以使用docker_pull命令 
+
+`sudo vi ~/.bash_profile`
+
+2. 将以下内容添加到文件中（路径到cmd即可）
+
+![20250627-163136@2x.png](images/20250627-163136%402x.png)
+
+3. 使用source命令使配置生效：
+
+```bash
+source ~/.bash_profile
+```
+
+4. 如果你使用的是Zsh，可以执行以下命令（例如你使用idea的terminal执行docker_pull 提示命令不存在，则使用以下步骤解决）：
+
+```bash
+## 打开或新建文件
+sudo vi ~/.zshrc
+
+## 将以下内容添加到文件中
+source ~/.bash_profile
+
+## 保存退出后，使配置生效
+source ~/.zshrc
+
+## 打开一个新的terminal窗口即可使用docker_pull 命令
+```
 
 ## 3. 方案使用
 配置完毕后，在任意目录下使用命令即可正常拉取镜像：
@@ -186,3 +213,15 @@ docker_pull mysql:8.0.1 mcp/elasticsearch:latest bitnami/redis:8.0.2-debian-12-r
 
 ![image](images/7lpqKhbf0FXcE5gHOndINgaN-e1glM2I8saTKnnyQaw.png)
 
+注：如果你发现首次执行docker_pull命令后，github上并没有触发workflows工作流. 
+
+原因：fork 仓库默认不运行上游配置的workflow，你需要显式启用Actions且拥有Secrets权限. 
+
+打开fork仓库，点开上方Actions tab，然后点击确认风险提示. 
+
+运行一个空提交来测试是否可以自动触发workflow
+
+```shell
+git commit --allow-empty -m "trigger workflow"
+git push
+```

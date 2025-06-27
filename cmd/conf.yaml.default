@@ -1,6 +1,14 @@
+### 复制该文件并命名为 conf.yaml，并填充以下自定义配置
+
+# 阿里云个人镜像仓库地址
 registry: crpi-xxx.cn-xxx.personal.cr.aliyuncs.com
+# 阿里云个人镜像仓库命名空间名称
 namespace: xxx
+# 所在项目的git仓库本地路径，这里配置错误会导致git push 命令提示仓库不存在
 images_dir: "E:\Git\docker_images_sync"
+# 拉取镜像尝试间隔（秒），默认为1
 max_retries: 60
+# 拉取镜像尝试间隔（秒），默认为1
 retry_delay: 1
+# 将镜像tag提交后等待多久开始尝试拉取镜像（秒），默认为20
 first_delay: 20
