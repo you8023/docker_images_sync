@@ -1,0 +1,37 @@
+#!/bin/bash
+docker_compose_pull() {
+  # Find all matching docker-compose files
+  compose_files=$(find . -name 'docker-compose*.yaml' -type f 2>/dev/null)
+
+  [ -z "$compose_files" ] && {
+     echo "Error: No docker-compose*.yaml files found"
+     return 1
+  }
+
+  # Store all image names
+  declare -a all_images
+
+  for file in $compose_files; do
+     echo "Scanning file: $file"
+     # Extract all image fields using yq
+     while IFS= read -r image; do
+         [ -n "$image" ] && all_images+=("$image")
+     done < <(yq eval '.services[].image' "$file" | grep -v 'null' | sort -u)
+  done
+
+  [ ${#all_images[@]} -eq 0 ] && {
+     echo "Warning: No valid image names detected"
+     return 0
+  }
+
+  # Execute image pulling by docker_pull
+  echo "Starting image pull..."
+  for img in "${all_images[@]}"; do
+     echo "Pulling: $img"
+     docker_pull "$img"
+  done
+  echo "Operation completed!"
+}
+
+# Call the function
+docker_compose_pull
